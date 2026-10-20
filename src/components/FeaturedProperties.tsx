@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { propertiesData, Property } from '../data/properties';
 
@@ -9,18 +9,8 @@ interface StackingCardProps {
   total: number;
 }
 
-const StackingCard: React.FC<StackingCardProps> = ({ prop, index, total }) => {
+const StackingCard: React.FC<StackingCardProps> = ({ prop, index }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isLast = index === total - 1;
-
-  // Track scroll progress through this card's viewport range
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start'],
-  });
-
-  // Dim the underlying card as the next full-bleed card covers it
-  const dimOpacity = useTransform(scrollYProgress, [0, 0.9], [0, 0.6]);
 
   return (
     <div
@@ -33,46 +23,35 @@ const StackingCard: React.FC<StackingCardProps> = ({ prop, index, total }) => {
       }}
     >
       <div className="relative w-full h-full overflow-hidden bg-neutral-950 border-t border-white/10 shadow-[0_-25px_60px_rgba(0,0,0,0.95)] group cursor-pointer flex items-center justify-center">
-        {/* Full-bleed Edge-to-Edge Architectural Photography */}
+        {/* Full-bleed Edge-to-Edge Architectural Photography - 100% Brightness, Never Darkens */}
         <motion.img
           src={prop.image}
           alt={prop.title}
           className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105"
         />
 
-        {/* Dynamic dimming overlay as following card slides over */}
-        {!isLast && (
-          <motion.div
-            style={{ opacity: dimOpacity }}
-            className="absolute inset-0 bg-black pointer-events-none z-10"
-          />
-        )}
-
-        {/* Ambient Vignette & Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/30 transition-colors duration-500 group-hover:bg-black/35 z-[1]" />
-
-        {/* Centered Property Meta */}
+        {/* Centered Property Meta with High-Contrast Text Shadows for Flawless Legibility */}
         <div className="relative z-20 text-center max-w-3xl px-6 space-y-4 transition-transform duration-500 group-hover:-translate-y-1">
-          <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white uppercase leading-[1.05]">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white uppercase leading-[1.05] [text-shadow:_0_2px_14px_rgba(0,0,0,0.95),_0_6px_28px_rgba(0,0,0,0.9)]">
             {prop.title}
           </h2>
-          <p className="text-xs sm:text-sm md:text-base text-white/80 font-normal tracking-wide">
+          <p className="text-xs sm:text-sm md:text-base text-white font-medium tracking-wide [text-shadow:_0_1px_8px_rgba(0,0,0,0.95),_0_3px_16px_rgba(0,0,0,0.9)]">
             {prop.address}
           </p>
-          <div className="text-xs sm:text-sm font-semibold text-white/90 tracking-widest pt-1">
+          <div className="text-xs sm:text-sm font-semibold text-white tracking-widest pt-1 [text-shadow:_0_1px_8px_rgba(0,0,0,0.95)]">
             {prop.beds} BEDS • {prop.baths} BATHS • {prop.sqft} SQ FT
           </div>
           <div className="pt-4 flex items-center justify-center space-x-3 sm:space-x-4">
             <Link
               to={`/properties/${prop.slug}`}
-              className="framer-btn-hover bg-white text-black px-6 sm:px-8 py-3 text-xs font-semibold tracking-wider uppercase transition-colors hover:bg-neutral-200"
+              className="framer-btn-hover bg-white text-black px-6 sm:px-8 py-3 text-xs font-semibold tracking-wider uppercase transition-colors hover:bg-neutral-200 shadow-xl"
             >
               <span className="framer-btn-text-1">Explore Build</span>
               <span className="framer-btn-text-2">Explore Build</span>
             </Link>
             <Link
               to="/properties"
-              className="framer-btn-hover border border-white/60 bg-transparent text-white px-6 sm:px-8 py-3 text-xs font-semibold tracking-wider uppercase transition-colors hover:border-white hover:bg-white/10"
+              className="framer-btn-hover border border-white bg-black/40 backdrop-blur-sm text-white px-6 sm:px-8 py-3 text-xs font-semibold tracking-wider uppercase transition-colors hover:border-white hover:bg-white hover:text-black shadow-xl"
             >
               <span className="framer-btn-text-1">View All Projects</span>
               <span className="framer-btn-text-2">View All Projects</span>
