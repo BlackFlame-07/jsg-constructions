@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Switzer", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Switzer", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --color-luxury-black: #000000;
+  --color-luxury-dark: #0a0a0a;
+  --color-luxury-card: #121212;
+  --color-luxury-border: rgba(255, 255, 255, 0.12);
+  --color-luxury-border-strong: rgba(255, 255, 255, 0.25);
+  --color-luxury-muted: #888888;
+  --color-luxury-gold: #c5a059;
+}
+
+:root {
+  font-family: var(--font-sans);
+  background-color: #000000;
+  color: #ffffff;
+  scroll-behavior: smooth;
+}
+
+/* Framer exact button text roll interaction */
+.framer-btn-hover {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.27, 0, 0.51, 1), background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.framer-btn-hover:hover {
+  transform: translateY(-1px);
+}
+
+.framer-btn-hover:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.framer-btn-text-1 {
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.27, 0, 0.51, 1), opacity 0.3s ease;
+}
+
+.framer-btn-text-2 {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  display: inline-block;
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.27, 0, 0.51, 1), opacity 0.3s ease;
+}
+
+.framer-btn-hover:hover .framer-btn-text-1 {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.framer-btn-hover:hover .framer-btn-text-2 {
+  transform: translateY(-100%);
+  opacity: 1;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+}
