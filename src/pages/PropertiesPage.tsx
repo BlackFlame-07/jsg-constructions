@@ -48,8 +48,8 @@ export const PropertiesPage: React.FC = () => {
             RESIDENCES
           </motion.h1>
 
-          {/* Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2">
+          {/* Category Tabs */}
+          <div className="flex flex-wrap items-center gap-6 border-b border-white/10 pb-2">
             {[
               { id: 'all', label: 'All Builds' },
               { id: 'custom', label: 'Custom Homes' },
@@ -58,13 +58,19 @@ export const PropertiesPage: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setFilter(tab.id as any)}
-                className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-300 border ${
+                className={`pb-1 text-xs font-semibold uppercase tracking-[0.2em] transition-all relative ${
                   filter === tab.id
-                    ? 'bg-white text-black border-white'
-                    : 'bg-white/5 text-white/70 border-white/10 hover:border-white/30 hover:text-white'
+                    ? 'text-white'
+                    : 'text-white/40 hover:text-white/80'
                 }`}
               >
                 {tab.label}
+                {filter === tab.id && (
+                  <motion.div
+                    layoutId="filter-underline"
+                    className="absolute -bottom-[9px] left-0 right-0 h-[2px] bg-white"
+                  />
+                )}
               </button>
             ))}
           </div>
@@ -99,16 +105,6 @@ export const PropertiesPage: React.FC = () => {
                     className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-                  {/* Badges Overlay */}
-                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-                    <span className="text-[10px] font-mono tracking-widest text-white/90 uppercase bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/15">
-                      {prop.price}
-                    </span>
-                    <span className="text-[10px] font-semibold text-white/70 uppercase tracking-widest bg-white/10 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
-                      JSG BUILD
-                    </span>
-                  </div>
                 </Link>
 
                 {/* Card Content */}

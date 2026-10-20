@@ -64,21 +64,8 @@ const StackingCard: React.FC<StackingCardProps> = ({ prop, index, total }) => {
         {/* Ambient Vignette & Gradient Overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/35 transition-colors duration-500 group-hover:bg-black/40 z-[1]" />
 
-        {/* Top Deck Header: Card Number & Region Pill */}
-        <div className="absolute top-5 left-5 sm:top-7 sm:left-7 md:top-8 md:left-8 z-20 flex items-center space-x-3">
-          <span className="text-[10px] sm:text-xs font-mono tracking-widest text-white/80 uppercase bg-black/60 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/15 shadow-sm">
-            0{index + 1} / 0{total}
-          </span>
-          <span className="text-[10px] sm:text-xs font-semibold text-neutral-300 uppercase tracking-[0.2em] bg-white/10 px-3.5 py-1 rounded-full backdrop-blur-md border border-white/10 hidden sm:inline-block">
-            {prop.price}
-          </span>
-        </div>
-
         {/* Centered Property Meta */}
         <div className="relative z-20 text-center max-w-2xl px-6 space-y-3 sm:space-y-4 transition-transform duration-500 group-hover:-translate-y-1">
-          <span className="inline-block sm:hidden text-[11px] font-semibold text-neutral-300 uppercase tracking-[0.2em] bg-white/10 px-3 py-0.5 rounded-full backdrop-blur-md border border-white/10">
-            {prop.price}
-          </span>
           <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white uppercase leading-[1.05]">
             {prop.title}
           </h2>
