@@ -13,40 +13,27 @@ const StackingCard: React.FC<StackingCardProps> = ({ prop, index, total }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isLast = index === total - 1;
 
-  // Track scroll progress through this card's container
+  // Track scroll progress through this card's viewport range
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start'],
   });
 
-  // Scale down slightly and dim as the next card stacks over it
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
-  const dimOpacity = useTransform(scrollYProgress, [0, 0.8], [0, 0.55]);
-
-  // Progressive sticky top offset creating the physical card-deck tab effect
-  // Desktop: 80px base + 16px per card; Mobile: 70px base + 12px per card
-  const topDesktop = 80 + index * 16;
-  const topMobile = 70 + index * 12;
+  // Dim the underlying card as the next full-bleed card covers it
+  const dimOpacity = useTransform(scrollYProgress, [0, 0.9], [0, 0.6]);
 
   return (
     <div
       ref={containerRef}
-      className={`w-full flex justify-center px-4 sm:px-6 md:px-10 ${
-        isLast ? 'mb-0' : 'mb-20 sm:mb-28 md:mb-36'
-      }`}
+      className="w-full h-screen min-h-[650px] md:min-h-[750px]"
       style={{
         position: 'sticky',
-        top: `clamp(${topMobile}px, 6vw, ${topDesktop}px)`,
+        top: 0,
         zIndex: index + 10,
       }}
     >
-      <motion.div
-        style={{
-          scale: isLast ? 1 : scale,
-        }}
-        className="relative w-full max-w-[1400px] h-[65vh] sm:h-[72vh] md:h-[78vh] max-h-[760px] min-h-[480px] rounded-2xl md:rounded-3xl overflow-hidden bg-neutral-950 border border-white/15 shadow-[0_-16px_50px_rgba(0,0,0,0.9)] group cursor-pointer flex items-center justify-center origin-top transition-shadow duration-500 hover:shadow-[0_-20px_60px_rgba(0,0,0,1)]"
-      >
-        {/* Full-bleed Architectural Photography */}
+      <div className="relative w-full h-full overflow-hidden bg-neutral-950 border-t border-white/10 shadow-[0_-25px_60px_rgba(0,0,0,0.95)] group cursor-pointer flex items-center justify-center">
+        {/* Full-bleed Edge-to-Edge Architectural Photography */}
         <motion.img
           src={prop.image}
           alt={prop.title}
@@ -62,37 +49,37 @@ const StackingCard: React.FC<StackingCardProps> = ({ prop, index, total }) => {
         )}
 
         {/* Ambient Vignette & Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/35 transition-colors duration-500 group-hover:bg-black/40 z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/30 transition-colors duration-500 group-hover:bg-black/35 z-[1]" />
 
         {/* Centered Property Meta */}
-        <div className="relative z-20 text-center max-w-2xl px-6 space-y-3 sm:space-y-4 transition-transform duration-500 group-hover:-translate-y-1">
-          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white uppercase leading-[1.05]">
+        <div className="relative z-20 text-center max-w-3xl px-6 space-y-4 transition-transform duration-500 group-hover:-translate-y-1">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white uppercase leading-[1.05]">
             {prop.title}
           </h2>
-          <p className="text-xs sm:text-sm text-white/80 font-normal tracking-wide">
+          <p className="text-xs sm:text-sm md:text-base text-white/80 font-normal tracking-wide">
             {prop.address}
           </p>
-          <div className="text-[11px] sm:text-xs font-semibold text-white/90 tracking-widest pt-0.5">
+          <div className="text-xs sm:text-sm font-semibold text-white/90 tracking-widest pt-1">
             {prop.beds} BEDS • {prop.baths} BATHS • {prop.sqft} SQ FT
           </div>
-          <div className="pt-3 sm:pt-4 flex items-center justify-center space-x-3">
+          <div className="pt-4 flex items-center justify-center space-x-3 sm:space-x-4">
             <Link
               to={`/properties/${prop.slug}`}
-              className="framer-btn-hover bg-white text-black px-5 sm:px-6 py-2.5 text-xs font-semibold tracking-wider uppercase transition-colors hover:bg-neutral-200"
+              className="framer-btn-hover bg-white text-black px-6 sm:px-8 py-3 text-xs font-semibold tracking-wider uppercase transition-colors hover:bg-neutral-200"
             >
               <span className="framer-btn-text-1">Explore Build</span>
               <span className="framer-btn-text-2">Explore Build</span>
             </Link>
             <Link
               to="/properties"
-              className="framer-btn-hover border border-white/60 bg-transparent text-white px-5 sm:px-6 py-2.5 text-xs font-semibold tracking-wider uppercase transition-colors hover:border-white hover:bg-white/10"
+              className="framer-btn-hover border border-white/60 bg-transparent text-white px-6 sm:px-8 py-3 text-xs font-semibold tracking-wider uppercase transition-colors hover:border-white hover:bg-white/10"
             >
               <span className="framer-btn-text-1">View All Projects</span>
               <span className="framer-btn-text-2">View All Projects</span>
             </Link>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };
@@ -101,30 +88,35 @@ export const FeaturedProperties: React.FC = () => {
   const featured = propertiesData.slice(0, 4);
 
   return (
-    <section id="properties" className="relative w-full bg-black pt-16 pb-28 md:pt-24 md:pb-40">
+    <section id="properties" className="relative w-full bg-black">
       {/* Section Header */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12 md:mb-16">
-        <motion.span
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-xs font-semibold uppercase tracking-[0.25em] text-white/60"
-        >
-          Signature Portfolio
-        </motion.span>
-        <motion.h2
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight uppercase text-white mt-2 leading-[1.05]"
-        >
-          Featured Residences
-        </motion.h2>
+      <div className="w-full px-6 md:px-12 py-16 md:py-24 border-b border-white/10 flex flex-col md:flex-row md:items-end justify-between gap-6 max-w-7xl mx-auto">
+        <div>
+          <motion.span
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-xs font-semibold uppercase tracking-[0.25em] text-white/60"
+          >
+            Signature Portfolio
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight uppercase text-white mt-2 leading-[1.05]"
+          >
+            Featured Residences
+          </motion.h2>
+        </div>
+        <p className="text-xs sm:text-sm text-white/60 max-w-md font-normal tracking-wide">
+          Custom architectural builds, full-scale renovations, and heritage extensions across Toowoomba and the Darling Downs.
+        </p>
       </div>
 
-      {/* Stacking Card Deck Container */}
+      {/* Full-bleed Stacking Cards */}
       <div className="relative w-full">
         {featured.map((prop, idx) => (
           <StackingCard

@@ -92,12 +92,12 @@ export const PropertiesPage: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.25, 0.1, 0.25, 1.0] }}
-                className="group relative rounded-2xl md:rounded-3xl overflow-hidden bg-neutral-950 border border-white/10 hover:border-white/25 transition-all duration-500 flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.9)]"
+                className="group relative rounded-none overflow-hidden bg-neutral-950 border border-white/10 hover:border-white/25 transition-all duration-500 flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.9)]"
               >
                 {/* Media Aspect Ratio Container */}
                 <Link
                   to={`/properties/${prop.slug}`}
-                  className="relative aspect-[16/11] overflow-hidden bg-neutral-900 block"
+                  className="relative aspect-[16/11] overflow-hidden bg-neutral-900 block rounded-none"
                 >
                   <motion.img
                     src={prop.image}
@@ -122,15 +122,15 @@ export const PropertiesPage: React.FC = () => {
 
                   {/* Architecture Specs Counter */}
                   <div className="pt-2 border-t border-white/10 grid grid-cols-3 gap-2 text-center">
-                    <div className="bg-white/[0.03] py-2 px-1 rounded-lg border border-white/5">
+                    <div className="bg-white/[0.03] py-2 px-1 rounded-none border border-white/5">
                       <span className="block text-[10px] text-white/50 uppercase tracking-wider font-mono">Beds</span>
                       <span className="text-xs font-bold text-white tracking-wide">{prop.beds}</span>
                     </div>
-                    <div className="bg-white/[0.03] py-2 px-1 rounded-lg border border-white/5">
+                    <div className="bg-white/[0.03] py-2 px-1 rounded-none border border-white/5">
                       <span className="block text-[10px] text-white/50 uppercase tracking-wider font-mono">Baths</span>
                       <span className="text-xs font-bold text-white tracking-wide">{prop.baths}</span>
                     </div>
-                    <div className="bg-white/[0.03] py-2 px-1 rounded-lg border border-white/5">
+                    <div className="bg-white/[0.03] py-2 px-1 rounded-none border border-white/5">
                       <span className="block text-[10px] text-white/50 uppercase tracking-wider font-mono">Sq Ft</span>
                       <span className="text-xs font-bold text-white tracking-wide">{prop.sqft}</span>
                     </div>
@@ -140,7 +140,7 @@ export const PropertiesPage: React.FC = () => {
                   <div className="pt-1">
                     <Link
                       to={`/properties/${prop.slug}`}
-                      className="framer-btn-hover w-full bg-white text-black py-2.5 text-xs font-semibold tracking-wider uppercase transition-colors hover:bg-neutral-200 text-center flex items-center justify-center rounded-lg"
+                      className="framer-btn-hover w-full bg-white text-black py-2.5 text-xs font-semibold tracking-wider uppercase transition-colors hover:bg-neutral-200 text-center flex items-center justify-center rounded-none"
                     >
                       <span className="framer-btn-text-1">Explore Residence</span>
                       <span className="framer-btn-text-2">Explore Residence</span>
