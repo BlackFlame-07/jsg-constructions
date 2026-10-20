@@ -29,3 +29,5 @@ page_checks/
 section_checks/
 /*.png
 .vercel
+
+.vercel
